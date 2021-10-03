@@ -7,16 +7,15 @@ import {
   Button,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { useContext } from "react";
-import ReadLaterContext from "../contexts/readlist-context";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Link } from "react-router-dom";
 import Loading from "./material-components/Loading";
 import { withAuthenticationRequired } from "@auth0/auth0-react";
-import api from "../api/index";
 import Image from "./material-components/ImageContainer";
-import { memo } from "react";
 import { makeStyles } from "@material-ui/styles";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { removeFromList } from "../store/readlist-slice";
 
 const styles = makeStyles((theme) => ({
   [theme.breakpoints.up("xs")]: {
@@ -47,31 +46,18 @@ const styles = makeStyles((theme) => ({
 }));
 
 function ReadLater() {
-  const readContext = useContext(ReadLaterContext);
-  const { updateReadStatus } = readContext;
-  const [readList, setReadList] = useState([]);
-  const [loading, setLoading] = useState(false);
   const classes = styles();
+  const dispatch = useDispatch();
+  const readItems = useSelector((state) => state.readlist.items);
+  const [readList, setReadList] = useState([]);
 
-  const removeFromList = (id, payload, readState) => {
-    updateReadStatus(id, payload, readState);
+  const removeItemFromList = (id) => {
+    dispatch(removeFromList(id));
   };
 
   useEffect(() => {
-    (async function () {
-      setLoading(true);
-      try {
-        const res = await api.getAllBlogs();
-        const filteredData = res.data.filter(
-          (item) => item.toReadLater === true
-        );
-        setReadList(filteredData);
-      } catch (err) {
-        console.log(`Error: ${err}`);
-      }
-      setLoading(false);
-    })();
-  }, []);
+    setReadList(readItems);
+  }, [readItems]);
 
   return (
     <Box
@@ -98,7 +84,7 @@ function ReadLater() {
           readList.map((item) => (
             <Box
               component={Card}
-              key={item._id}
+              key={item.id}
               width="100%"
               display="flex"
               flexDirection="row"
@@ -142,9 +128,10 @@ function ReadLater() {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() =>
-                      removeFromList(item._id, item, item.toReadLater)
-                    }
+                    // onClick={() =>
+                    //   removeFromList(item._id, item, item.toReadLater)
+                    // }
+                    onClick={() => removeItemFromList(item.id)}
                   >
                     <DeleteIcon />
                   </Button>
@@ -158,6 +145,6 @@ function ReadLater() {
   );
 }
 
-export default withAuthenticationRequired(memo(ReadLater), {
+export default withAuthenticationRequired(ReadLater, {
   onRedirecting: () => <Loading />,
 });

@@ -36,7 +36,7 @@ const BlogDetails = lazy(() =>
 );
 const UserData = lazy(() => import("./components/UserData"));
 const PageNotFound = lazy(() => import("./404"));
-const ReadLaterList = lazy(() => import("./components/ReadLaterList"));
+const Readlist = lazy(() => import("./components/Readlist"));
 
 export default function App() {
   return (
@@ -49,7 +49,7 @@ export default function App() {
                 <Redirect to="/blogs" />
               </Route>
               <Route path="/blogs" exact component={BlogsList} />
-              <Route path="/blogs/read-later" exact component={ReadLaterList} />
+              <Route path="/blogs/read-later" exact component={Readlist} />
               <Route path="/blogs/:id" exact component={BlogDetails} />
               <Route path="/blog/add" exact component={BlogsAdd} />
               <Route path="/blogs/update/:id" exact component={BlogsUpdate} />
