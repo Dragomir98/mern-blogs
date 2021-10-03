@@ -29,6 +29,11 @@ function BlogsUpdate() {
   const [loading, setLoading] = useState(false);
   const { getAccessTokenSilently } = useAuth0();
 
+  //handle input validity
+  const titleIsValid = title.trim().length > 5;
+  const descriptionIsValid = description.trim().length > 15;
+  const imageIsValid = image.trim().length > 0;
+
   useEffect(() => {
     (async function () {
       setLoading(true);
@@ -49,11 +54,12 @@ function BlogsUpdate() {
     })();
   }, [id, getAccessTokenSilently]);
 
+  //handle image upload variant
   const BlogImage = () => {
     if (buttonText === "FILE") {
       setButtonText("URL");
       setImageFormat(fileFormat);
-    } else {
+    } else if (buttonText === "URL") {
       setButtonText("FILE");
       setImageFormat(urlFormat);
     }
@@ -87,7 +93,7 @@ function BlogsUpdate() {
     e.preventDefault();
 
     try {
-      if (title && image && description) {
+      if (titleIsValid && descriptionIsValid && imageIsValid) {
         setLoading(true);
 
         const updatedBlog = {
@@ -100,10 +106,10 @@ function BlogsUpdate() {
           setFormMessage(SuccessAlert("Blog successfully updated!"));
           setLoading(false);
           setTimeout(() => {
-            history.push(`/blogs/${id}`);
+            history.replace(`/blogs/${id}`);
           }, 3000);
         });
-      } else setFormMessage(ErrorAlert("Empty input fields"));
+      }
     } catch (err) {
       setFormMessage(ErrorAlert(`Error during form submisson: ${err}`));
     }
@@ -125,6 +131,9 @@ function BlogsUpdate() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
+            {title.trim().length !== 0 &&
+              !titleIsValid &&
+              ErrorAlert("Title must be atleast 5 characters long!")}
           </FormControl>
         </Box>
 
@@ -140,6 +149,9 @@ function BlogsUpdate() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
+            {description.trim().length !== 0 &&
+              !descriptionIsValid &&
+              ErrorAlert("Description must be atleast 15 characters long!")}
           </FormControl>
         </Box>
 
@@ -177,7 +189,12 @@ function BlogsUpdate() {
             Back
           </Button>
 
-          <Button variant="contained" color="primary" type="submit">
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={!titleIsValid || !descriptionIsValid || !imageIsValid}
+          >
             Submit
           </Button>
         </Box>
