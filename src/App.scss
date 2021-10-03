@@ -28,6 +28,12 @@ body {
   background-color: #f1f1f1;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 header {
   &.MuiAppBar-colorPrimary {
     background-color: var(--theme-primary-color);
@@ -86,6 +92,7 @@ footer {
   width: 100%;
   text-align: right;
 }
+
 .custom-file-upload {
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -99,6 +106,7 @@ footer {
 div[role="alert"] {
   margin: 16px 0;
 }
+
 .image-link {
   margin-left: 16px !important;
 }
@@ -131,10 +139,11 @@ div[role="alert"] {
 }
 
 .readlist-image {
-  max-width: 40%;
+  max-width: 50%;
   min-height: 100%;
-  min-width: 40%;
+  min-width: 50%;
 }
+
 .readlist-details {
   display: -webkit-box;
   -webkit-box-orient: vertical;

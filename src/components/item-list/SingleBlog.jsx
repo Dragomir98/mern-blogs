@@ -15,27 +15,50 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
-import ReadListContext from "../../contexts/readlist-context";
-import { useContext, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Image from "../material-components/ImageContainer";
 import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { addToList, removeFromList } from "../../store/readlist-slice";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 export default function SingleBlog(props) {
   const { _id, createdAt, title, image, description, toReadLater } = props.data;
-  const readContext = useContext(ReadListContext);
   const { isAuthenticated } = useAuth0();
   const history = useHistory();
-  const { updateReadStatus } = readContext;
-  const [readStatus, setReadStatus] = useState(toReadLater);
+  const dispatch = useDispatch();
+  const readlist = useSelector((state) => state.readlist.items);
+  const [readState, setReadState] = useState(false);
 
-  const toggleItemInReadList = () => {
-    updateReadStatus(_id, props.data, toReadLater);
+  useEffect(() => {
+    const existingIndex = readlist.findIndex((item) => item.id === _id);
+    const existingItem = readlist[existingIndex];
+    if (existingItem) {
+      setReadState(true);
+    } else {
+      setReadState(false);
+    }
+  }, [readlist, readState]);
+
+  const addToReadlistHandler = () => {
+    dispatch(
+      addToList({
+        id: _id,
+        title,
+        image,
+        description,
+      })
+    );
+  };
+
+  const removeFromReadlistHandler = () => {
+    dispatch(removeFromList(_id));
   };
 
   const handleDeleteBlog = (id) => {
     apis.deleteBlogById(id);
-    history.push("/");
+    history.replace("/");
   };
 
   return (
@@ -51,13 +74,15 @@ export default function SingleBlog(props) {
 
             {isAuthenticated && (
               <Box>
-                <Button onClick={() => toggleItemInReadList()}>
-                  {readStatus ? (
+                {readState ? (
+                  <Button onClick={() => removeFromReadlistHandler()}>
                     <BookmarkIcon color="secondary" />
-                  ) : (
+                  </Button>
+                ) : (
+                  <Button onClick={() => addToReadlistHandler()}>
                     <BookmarkBorderIcon color="secondary" />
-                  )}
-                </Button>
+                  </Button>
+                )}
               </Box>
             )}
           </Box>

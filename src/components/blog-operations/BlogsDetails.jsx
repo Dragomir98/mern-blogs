@@ -48,7 +48,7 @@ export default function BlogDetails() {
 
   const handleDeleteBlog = (id) => {
     api.deleteBlogById(id);
-    history.push("/blogs");
+    history.replace("/blogs");
   };
 
   return (

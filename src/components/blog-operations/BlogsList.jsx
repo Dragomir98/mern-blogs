@@ -27,18 +27,20 @@ function BlogsList() {
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
-      try {
-        await api.getAllBlogs().then((res) => {
-          setBlogs(res.data);
-          setDefaultBlogs(res.data);
-        });
-      } catch (err) {
-        console.log(`Error: ${err}`);
-      }
+
+      await api.getAllBlogs().then((res) => {
+        setBlogs(res.data);
+        setDefaultBlogs(res.data);
+      });
+
       setLoading(false);
     };
 
-    getData();
+    try {
+      getData();
+    } catch (err) {
+      console.log(`Error: ${err}`);
+    }
   }, []);
 
   return (

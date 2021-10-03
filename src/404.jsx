@@ -7,7 +7,7 @@ export default function PageNotFound() {
 
   useEffect(() => {
     setTimeout(() => {
-      history.push("/blogs");
+      history.replace("/blogs");
     }, 5000);
   }, []);
 
