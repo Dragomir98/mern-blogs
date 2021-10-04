@@ -16,25 +16,36 @@ import EditIcon from "@material-ui/icons/Edit";
 import { useAuth0 } from "@auth0/auth0-react";
 import api from "../../api";
 import Loading from "../material-components/Loading";
-import ReadListContext from "../../contexts/readlist-context";
+import { addToList, removeFromList } from "../../store/readlist-slice";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 import Image from "../material-components/ImageContainer";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function BlogDetails() {
   const { id } = useParams();
-  const readContext = useContext(ReadListContext);
   const [currentBlog, setCurrentBlog] = useState("");
   const history = useHistory();
   const { isAuthenticated } = useAuth0();
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const readlist = useSelector((state) => state.readlist.items);
+  const [readState, setReadState] = useState(false);
 
-  const toggleItemInReadList = () => {
-    readContext.updateReadStatus(
-      currentBlog._id,
-      currentBlog,
-      currentBlog.toReadLater
+  const addToReadlistHandler = () => {
+    dispatch(
+      addToList({
+        id: currentBlog._id,
+        title: currentBlog.title,
+        image: currentBlog.image,
+        description: currentBlog.description,
+      })
     );
+  };
+
+  const removeFromReadlistHandler = () => {
+    dispatch(removeFromList(id));
   };
 
   useEffect(() => {
@@ -44,7 +55,17 @@ export default function BlogDetails() {
       setCurrentBlog(blog.data);
       setLoading(false);
     })();
-  }, [id]);
+  }, []);
+
+  useEffect(() => {
+    const existingIndex = readlist.findIndex((item) => item.id === id);
+    const existingItem = readlist[existingIndex];
+    if (existingItem) {
+      setReadState(true);
+    } else {
+      setReadState(false);
+    }
+  }, [readlist]);
 
   const handleDeleteBlog = (id) => {
     api.deleteBlogById(id);
@@ -70,13 +91,15 @@ export default function BlogDetails() {
                 </Typography>
                 {isAuthenticated && (
                   <Box>
-                    <Button onClick={() => toggleItemInReadList()}>
-                      {currentBlog.readStatus ? (
+                    {readState ? ( //finish adding to readlist
+                      <Button onClick={() => removeFromReadlistHandler()}>
                         <BookmarkIcon color="secondary" />
-                      ) : (
+                      </Button>
+                    ) : (
+                      <Button onClick={() => addToReadlistHandler()}>
                         <BookmarkBorderIcon color="secondary" />
-                      )}
-                    </Button>
+                      </Button>
+                    )}
                   </Box>
                 )}
                 <Typography variant="h4">{currentBlog.title}</Typography>
