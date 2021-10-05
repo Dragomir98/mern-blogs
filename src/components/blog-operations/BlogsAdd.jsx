@@ -48,7 +48,7 @@ function BlogsAdd() {
         };
 
         await api.insertBlog(newBlog).then(() => {
-          setFormMessage(SuccessAlert("Blog successfully added!"));
+          setFormMessage(<SuccessAlert message="Blog successfully added!" />);
           setLoading(false);
 
           setTitle("");
@@ -57,7 +57,7 @@ function BlogsAdd() {
         });
       }
     } catch (err) {
-      setFormMessage(ErrorAlert("Error during form submisson!"));
+      setFormMessage(<ErrorAlert message="Error during form submisson!" />);
     }
   };
 
@@ -94,9 +94,9 @@ function BlogsAdd() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
-              {title.trim().length !== 0 &&
-                !titleIsValid &&
-                ErrorAlert("Title must be atleast 5 characters long!")}
+              {title.trim().length !== 0 && !titleIsValid && (
+                <ErrorAlert message="Title must be atleast 5 characters long!" />
+              )}
             </FormControl>
           </Box>
 
@@ -112,9 +112,9 @@ function BlogsAdd() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
-              {description.trim().length !== 0 &&
-                !descriptionIsValid &&
-                ErrorAlert("Description must be atleast 15 characters long!")}
+              {description.trim().length !== 0 && !descriptionIsValid && (
+                <ErrorAlert message="Description must be atleast 15 characters long!" />
+              )}
             </FormControl>
           </Box>
 
