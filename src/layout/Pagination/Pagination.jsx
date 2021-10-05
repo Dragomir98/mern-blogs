@@ -50,7 +50,7 @@ export default function Pagination({
         </Box>
       </Box>
 
-      <div className={`pagination ${data.length <= 7 ? "hidden" : ""}`}>
+      <div className={`pagination ${data.length <= 7 && "hidden"}`}>
         <button
           onClick={prevPage}
           className={`prev ${currentPage === 1 ? "disabled" : ""}`}
@@ -72,7 +72,7 @@ export default function Pagination({
 
         <button
           onClick={nextPage}
-          className={`next ${currentPage === pages ? "disabled" : ""}`}
+          className={`next ${currentPage === pages && "disabled"}`}
         >
           next
         </button>

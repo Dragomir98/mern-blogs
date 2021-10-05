@@ -44,14 +44,9 @@ function BlogsList() {
   }, []);
 
   return (
-    <Box component="section" my={5} display="flex" flexDirection="column">
+    <Box component="section" pt={5} display="flex" flexDirection="column">
       <Search input={searchInput} onChange={updateInput} />
-      <Box
-        mb={4}
-        height="300px"
-        className="poster-container"
-        position="relative"
-      >
+      <Box height="300px" className="poster-container" position="relative">
         {!isAuthenticated && (
           <NotLoggedInAlert
             classes="login-alert"
@@ -61,7 +56,9 @@ function BlogsList() {
         <Image url={posterImage} alt="Blogs" className="poster-image" />
       </Box>
       {loading ? (
-        <Loading />
+        <Box mt={5}>
+          <Loading />
+        </Box>
       ) : blogs.length > 0 ? (
         <ItemList list={blogs} />
       ) : (

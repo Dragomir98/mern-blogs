@@ -8,6 +8,7 @@ import {
   CardActions,
   Container,
   Divider,
+  makeStyles,
   Typography,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
@@ -24,6 +25,14 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import ActionButton from "../material-components/ActionButton";
 
+const useStyles = makeStyles((theme) => ({
+  [theme.breakpoints.down("xs")]: {
+    blogImage: {
+      maxHeight: "150px",
+    },
+  },
+}));
+
 export default function BlogDetails() {
   const { id } = useParams();
   const [currentBlog, setCurrentBlog] = useState("");
@@ -33,6 +42,7 @@ export default function BlogDetails() {
   const dispatch = useDispatch();
   const readlist = useSelector((state) => state.readlist.items);
   const [readState, setReadState] = useState(false);
+  const classes = useStyles();
 
   const addToReadlistHandler = () => {
     dispatch(
@@ -84,6 +94,7 @@ export default function BlogDetails() {
               url={currentBlog.image}
               alt={currentBlog.title}
               height="500px"
+              className={classes.blogImage}
             />
             <Box px={2}>
               <Box py={2} display="flex" flexDirection="column">
@@ -93,7 +104,7 @@ export default function BlogDetails() {
                   justifyContent="space-between"
                 >
                   <Typography variant="body1">
-                    Submitted on {currentBlog.createdAt.substr(0, 10)}
+                    Submitted on {currentBlog.createdAt}
                   </Typography>
                   {isAuthenticated && (
                     <Box>
@@ -114,7 +125,7 @@ export default function BlogDetails() {
               <Divider />
               <Box
                 component={Typography}
-                variant="h4"
+                variant="body1"
                 className="description full"
                 py={2}
               >

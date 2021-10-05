@@ -8,7 +8,7 @@ import store from "./store/store";
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename="/mern-blogs/">
       <Auth0Provider
         domain={import.meta.env.VITE_DOMAIN}
         clientId={import.meta.env.VITE_CLIENT_ID}

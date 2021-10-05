@@ -1,5 +1,5 @@
 import "./App.scss";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import BlogsList from "./components/blog-operations/BlogsList";
 import Layout from "./layout/Layout";
 import { createTheme, MuiThemeProvider } from "@material-ui/core";
@@ -40,25 +40,23 @@ const Readlist = lazy(() => import("./components/Readlist"));
 
 export default function App() {
   return (
-    <BrowserRouter basename="/mern-blogs/">
-      <MuiThemeProvider theme={theme}>
-        <Layout>
-          <Suspense fallback={<Loading />}>
-            <Switch>
-              <Route exact path="/">
-                <Redirect to="/blogs" />
-              </Route>
-              <Route path="/blogs" exact component={BlogsList} />
-              <Route path="/blogs/read-later" exact component={Readlist} />
-              <Route path="/blogs/:id" exact component={BlogDetails} />
-              <Route path="/blog/add" exact component={BlogsAdd} />
-              <Route path="/blogs/update/:id" exact component={BlogsUpdate} />
-              <Route path="/account" exact component={UserData} />
-              <Route path="*" component={PageNotFound} />
-            </Switch>
-          </Suspense>
-        </Layout>
-      </MuiThemeProvider>
-    </BrowserRouter>
+    <MuiThemeProvider theme={theme}>
+      <Layout>
+        <Suspense fallback={<Loading />}>
+          <Switch>
+            <Route exact path="/">
+              <Redirect to="/blogs" />
+            </Route>
+            <Route path="/blogs" exact component={BlogsList} />
+            <Route path="/blogs/read-later" exact component={Readlist} />
+            <Route path="/blogs/:id" exact component={BlogDetails} />
+            <Route path="/blog/add" exact component={BlogsAdd} />
+            <Route path="/blogs/update/:id" exact component={BlogsUpdate} />
+            <Route path="/account" exact component={UserData} />
+            <Route path="*" component={PageNotFound} />
+          </Switch>
+        </Suspense>
+      </Layout>
+    </MuiThemeProvider>
   );
 }
