@@ -22,6 +22,7 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 import Image from "../material-components/ImageContainer";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import ActionButton from "../material-components/ActionButton";
 
 export default function BlogDetails() {
   const { id } = useParams();
@@ -86,22 +87,28 @@ export default function BlogDetails() {
             />
             <Box px={2}>
               <Box py={2} display="flex" flexDirection="column">
-                <Typography variant="body1">
-                  Submitted on {currentBlog.createdAt}
-                </Typography>
-                {isAuthenticated && (
-                  <Box>
-                    {readState ? ( //finish adding to readlist
-                      <Button onClick={() => removeFromReadlistHandler()}>
-                        <BookmarkIcon color="secondary" />
-                      </Button>
-                    ) : (
-                      <Button onClick={() => addToReadlistHandler()}>
-                        <BookmarkBorderIcon color="secondary" />
-                      </Button>
-                    )}
-                  </Box>
-                )}
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Typography variant="body1">
+                    Submitted on {currentBlog.createdAt.substr(0, 10)}
+                  </Typography>
+                  {isAuthenticated && (
+                    <Box>
+                      {readState ? (
+                        <Button onClick={() => removeFromReadlistHandler()}>
+                          <BookmarkIcon color="secondary" />
+                        </Button>
+                      ) : (
+                        <Button onClick={() => addToReadlistHandler()}>
+                          <BookmarkBorderIcon color="secondary" />
+                        </Button>
+                      )}
+                    </Box>
+                  )}
+                </Box>
                 <Typography variant="h4">{currentBlog.title}</Typography>
               </Box>
               <Divider />
@@ -128,20 +135,24 @@ export default function BlogDetails() {
                   Back
                 </Button>
                 {isAuthenticated && (
-                  <Box>
-                    <Button
-                      color="secondary"
-                      component={Link}
-                      to={`/blogs/update/${id}`}
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    className="detail-page-actions"
+                  >
+                    <ActionButton tooltip="Edit Blog" action="edit">
+                      <Link to={`/blogs/update/${id}`}>
+                        <EditIcon />
+                      </Link>
+                    </ActionButton>
+
+                    <ActionButton
+                      tooltip="Delete Blog"
+                      action="delete"
+                      clickHandler={() => handleDeleteBlog(id)}
                     >
-                      <EditIcon fontSize="large" />
-                    </Button>
-                    <Button
-                      color="primary"
-                      onClick={() => handleDeleteBlog(id)}
-                    >
-                      <DeleteIcon fontSize="large" />
-                    </Button>
+                      <DeleteIcon />
+                    </ActionButton>
                   </Box>
                 )}
               </Box>

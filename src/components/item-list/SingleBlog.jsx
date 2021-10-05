@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { addToList, removeFromList } from "../../store/readlist-slice";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import ActionButton from "../material-components/ActionButton";
 
 export default function SingleBlog(props) {
   const { _id, createdAt, title, image, description, toReadLater } = props.data;
@@ -66,25 +67,35 @@ export default function SingleBlog(props) {
       <Card>
         <CardActionArea>
           <Box p={1}>
-            <span>Posted on {createdAt}</span>
-
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <span>Posted on {createdAt.substr(0, 10)}</span>
+              {isAuthenticated && (
+                <Tooltip
+                  title={`${
+                    readState ? "Remove from Readlist" : "Add to Readlist"
+                  }`}
+                >
+                  {readState ? (
+                    <BookmarkIcon
+                      color="secondary"
+                      onClick={() => removeFromReadlistHandler()}
+                    />
+                  ) : (
+                    <BookmarkBorderIcon
+                      color="secondary"
+                      onClick={() => addToReadlistHandler()}
+                    />
+                  )}
+                </Tooltip>
+              )}
+            </Box>
             <Typography gutterBottom variant="h5" component="h2">
               {title}
             </Typography>
-
-            {isAuthenticated && (
-              <Box>
-                {readState ? (
-                  <Button onClick={() => removeFromReadlistHandler()}>
-                    <BookmarkIcon color="secondary" />
-                  </Button>
-                ) : (
-                  <Button onClick={() => addToReadlistHandler()}>
-                    <BookmarkBorderIcon color="secondary" />
-                  </Button>
-                )}
-              </Box>
-            )}
           </Box>
 
           <Image url={image} alt={title} className="card-image" />
@@ -108,22 +119,20 @@ export default function SingleBlog(props) {
             </Tooltip>
 
             {isAuthenticated && (
-              <Box>
-                <Tooltip title="Edit blog">
-                  <Button
-                    color="secondary"
-                    component={Link}
-                    to={`/blogs/update/${_id}`}
-                  >
+              <Box display="flex" alignItems="center">
+                <ActionButton tooltip="Edit Blog" action="edit">
+                  <Link to={`/blogs/update/${_id}`}>
                     <EditIcon />
-                  </Button>
-                </Tooltip>
+                  </Link>
+                </ActionButton>
 
-                <Tooltip title="Delete blog">
-                  <Button color="primary" onClick={() => handleDeleteBlog(_id)}>
-                    <DeleteIcon />
-                  </Button>
-                </Tooltip>
+                <ActionButton
+                  tooltip="Delete Blog"
+                  action="delete"
+                  clickHandler={() => handleDeleteBlog(_id)}
+                >
+                  <DeleteIcon />
+                </ActionButton>
               </Box>
             )}
           </Box>
