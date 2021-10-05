@@ -10,24 +10,24 @@ import {
   FormGroup,
   FormControl,
 } from "@material-ui/core";
-import imageUpload from "../../api/imageUpload";
 import { ErrorAlert, SuccessAlert } from "../material-components/Alerts";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import axios from "axios";
 import Loading from "../material-components/Loading";
+import ImageInput from "../material-components/ImageInput";
 
 function BlogsUpdate() {
+  const defaultImage = `${import.meta.env.VITE_DEFAULT_BLOG_IMAGE}`;
   const { id } = useParams();
   const history = useHistory();
   const [title, setTitle] = useState("");
-  const [image, setImage] = useState(
-    "https://images.unsplash.com/photo-1432821596592-e2c18b78144f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YmxvZyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"
-  );
   const [description, setDescription] = useState("");
-  const [buttonText, setButtonText] = useState("URL");
   const [formMessage, setFormMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const { getAccessTokenSilently } = useAuth0();
+
+  const { image, imageFormat, buttonText, toggleImage, changeImage } =
+    ImageInput(defaultImage);
 
   //handle input validity
   const titleIsValid = title.trim().length > 5;
@@ -48,46 +48,11 @@ function BlogsUpdate() {
         headers
       );
       setTitle(blogToUpdate.data.title);
-      setImage(blogToUpdate.data.image);
+      changeImage(blogToUpdate.data.image);
       setDescription(blogToUpdate.data.description);
       setLoading(false);
     })();
   }, [id, getAccessTokenSilently]);
-
-  //handle image upload variant
-  const BlogImage = () => {
-    if (buttonText === "FILE") {
-      setButtonText("URL");
-      setImageFormat(fileFormat);
-    } else if (buttonText === "URL") {
-      setButtonText("FILE");
-      setImageFormat(urlFormat);
-    }
-  };
-
-  const urlFormat = (
-    <TextField
-      variant="outlined"
-      type="url"
-      id="image"
-      value={image}
-      onChange={(e) => setImage(e.target.value)}
-    />
-  );
-  const fileFormat = (
-    <>
-      <TextField
-        variant="outlined"
-        type="file"
-        id="image"
-        name="image"
-        accept="image/*"
-        onChange={(e) => imageUpload(e.target.files[0], setImage)}
-      />
-    </>
-  );
-
-  const [imageFormat, setImageFormat] = useState(fileFormat);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -111,7 +76,7 @@ function BlogsUpdate() {
         });
       }
     } catch (err) {
-      setFormMessage(ErrorAlert(`Error during form submisson: ${err}`));
+      setFormMessage(ErrorAlert("Error during form submisson!"));
     }
   };
 
@@ -165,7 +130,7 @@ function BlogsUpdate() {
               variant="contained"
               color="primary"
               id="image-type"
-              onClick={BlogImage}
+              onClick={toggleImage}
             >
               {buttonText}
             </Button>

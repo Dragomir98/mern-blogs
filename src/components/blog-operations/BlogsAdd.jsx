@@ -11,58 +11,26 @@ import {
 import { useState } from "react";
 import { Prompt } from "react-router";
 import api from "../../api";
-import imageUpload from "../../api/imageUpload";
 import { ErrorAlert, SuccessAlert } from "../material-components/Alerts";
+import ImageInput from "../material-components/ImageInput";
 import Loading from "../material-components/Loading";
 
 function BlogsAdd() {
-  const defaultImage =
-    "https://images.unsplash.com/photo-1432821596592-e2c18b78144f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YmxvZyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80";
+  const defaultImage = `${import.meta.env.VITE_DEFAULT_BLOG_IMAGE}`;
   const [title, setTitle] = useState("");
-  const [image, setImage] = useState(defaultImage);
   const [description, setDescription] = useState("");
-  const [buttonText, setButtonText] = useState("URL");
   const [formMessage, setFormMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
+
+  //use custom image input component here
+  const { image, imageFormat, buttonText, toggleImage, changeImage } =
+    ImageInput(defaultImage);
 
   //handle input validity
   const titleIsValid = title.trim().length > 5;
   const descriptionIsValid = description.trim().length > 15;
   const imageIsValid = image.trim().length > 0;
-
-  //handle image upload variant
-  const BlogImage = () => {
-    if (buttonText === "FILE") {
-      setButtonText("URL");
-      setImageFormat(fileFormat);
-    } else if (buttonText === "URL") {
-      setButtonText("FILE");
-      setImageFormat(urlFormat);
-    }
-  };
-
-  const urlFormat = (
-    <TextField
-      label="Enter image url"
-      variant="outlined"
-      type="url"
-      id="image"
-      onChange={(e) => setImage(e.target.value)}
-    />
-  );
-  const fileFormat = (
-    <TextField
-      variant="outlined"
-      type="file"
-      id="image"
-      name="image"
-      accept="image/*"
-      onChange={(e) => imageUpload(e.target.files[0], setImage)}
-    />
-  );
-
-  const [imageFormat, setImageFormat] = useState(fileFormat);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -84,12 +52,12 @@ function BlogsAdd() {
           setLoading(false);
 
           setTitle("");
-          setImage(defaultImage);
+          changeImage(defaultImage);
           setDescription("");
         });
       }
     } catch (err) {
-      setFormMessage(ErrorAlert(`Error during form submisson: ${err}`));
+      setFormMessage(ErrorAlert("Error during form submisson!"));
     }
   };
 
@@ -160,7 +128,7 @@ function BlogsAdd() {
                 variant="contained"
                 color="primary"
                 id="image-type"
-                onClick={BlogImage}
+                onClick={toggleImage}
               >
                 {buttonText}
               </Button>
