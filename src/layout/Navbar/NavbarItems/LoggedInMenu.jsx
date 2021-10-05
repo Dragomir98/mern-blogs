@@ -8,7 +8,7 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 
 const useStyles = makeStyles(() => ({
@@ -19,6 +19,10 @@ const useStyles = makeStyles(() => ({
     marginRight: "5px",
     position: "relative",
   },
+  readlistLink: {
+    marginRight: "10px",
+    padding: "5px !important",
+  },
 }));
 
 const LoggedInMenu = (props) => {
@@ -28,9 +32,13 @@ const LoggedInMenu = (props) => {
     props.isAuthenticated && (
       <Box display="flex" alignItems="center">
         <Tooltip title="Reading list">
-          <Link to="/blogs/read-later" className={classes.homeLink}>
+          <NavLink
+            activeClassName="nav-link-active"
+            to="/blogs/read-later"
+            className={classes.readlistLink}
+          >
             <MenuBookIcon fontSize="large" />
-          </Link>
+          </NavLink>
         </Tooltip>
 
         <Avatar

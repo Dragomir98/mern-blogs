@@ -9,6 +9,7 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import HomeIcon from "@material-ui/icons/Home";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { makeStyles } from "@material-ui/styles";
+import DrawerLink from "./DrawerLink";
 
 const useStyles = makeStyles(() => ({
   drawerIcon: {
@@ -21,44 +22,25 @@ const DrawerItems = (props) => {
 
   return (
     <div style={{ width: 250 }} onClick={props.openDrawer}>
-      <ListItem button>
-        <Link className="drawer-link" to="/blogs">
-          <ListItemIcon className={classes.drawerIcon}>
-            <HomeIcon color="primary" fontSize="large" />
-          </ListItemIcon>
-          <ListItemText>
-            <Typography variant="h6" align="center">
-              Home
-            </Typography>
-          </ListItemText>
-        </Link>
-      </ListItem>
+      <DrawerLink title="Home" link="/blogs" classes={classes.drawerIcon}>
+        <HomeIcon color="primary" fontSize="large" />
+      </DrawerLink>
       {props.isAuthenticated && (
         <>
-          <ListItem button>
-            <Link className="drawer-link" to="/blog/add">
-              <ListItemIcon className={classes.drawerIcon}>
-                <AddCircleIcon color="primary" fontSize="large" />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography variant="h6" align="center">
-                  New Blog
-                </Typography>
-              </ListItemText>
-            </Link>
-          </ListItem>
-          <ListItem button>
-            <Link className="drawer-link" to="/account">
-              <ListItemIcon className={classes.drawerIcon}>
-                <AccountBoxIcon color="primary" fontSize="large" />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography variant="h6" align="center">
-                  Account
-                </Typography>
-              </ListItemText>
-            </Link>
-          </ListItem>
+          <DrawerLink
+            title="New Blog"
+            link="/blog/add"
+            classes={classes.drawerIcon}
+          >
+            <AddCircleIcon color="primary" fontSize="large" />
+          </DrawerLink>
+          <DrawerLink
+            title="Account"
+            link="/account"
+            classes={classes.drawerIcon}
+          >
+            <AccountBoxIcon color="primary" fontSize="large" />
+          </DrawerLink>
         </>
       )}
     </div>

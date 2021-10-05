@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   AppBar,
   Typography,
@@ -116,11 +116,15 @@ export default function Navbar() {
   const desktopNav = () => (
     <Box component={Toolbar} display="flex" alignItems="center">
       <Typography variant="h5">
-        <Link to="/blogs">Home</Link>
+        <NavLink activeClassName="nav-link-active" exact={true} to="/blogs">
+          Home
+        </NavLink>
       </Typography>
       {isAuthenticated && (
         <Typography variant="h5" className={classes.addLink}>
-          <Link to="/blog/add">New Blog</Link>
+          <NavLink activeClassName="nav-link-active" to="/blog/add">
+            New Blog
+          </NavLink>
         </Typography>
       )}
       <Box ml="auto">
