@@ -1,6 +1,6 @@
 import "./App.scss";
 import { Redirect, Route, Switch } from "react-router-dom";
-import BlogsList from "./components/blog-operations/BlogsList";
+import BlogsList from "./components/blog-pages/BlogsList";
 import Layout from "./layout/Layout";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { lazy } from "react";
@@ -27,13 +27,9 @@ const theme = createTheme({
   },
 });
 
-const BlogsAdd = lazy(() => import("./components/blog-operations/BlogsAdd"));
-const BlogsUpdate = lazy(() =>
-  import("./components/blog-operations/BlogsUpdate")
-);
-const BlogDetails = lazy(() =>
-  import("./components/blog-operations/BlogsDetails")
-);
+const BlogsAdd = lazy(() => import("./components/blog-pages/BlogsAdd"));
+const BlogsUpdate = lazy(() => import("./components/blog-pages/BlogsUpdate"));
+const BlogDetails = lazy(() => import("./components/blog-pages/BlogsDetails"));
 const UserData = lazy(() => import("./components/UserData"));
 const PageNotFound = lazy(() => import("./404"));
 const Readlist = lazy(() => import("./components/Readlist"));
