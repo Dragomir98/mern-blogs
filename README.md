@@ -1,4 +1,4 @@
-## Single-page [React application](https://dragomir98.github.io/mern-blogs/blogs) for reading, creating, editing and deleting blogs
+## Single-page [React application](https://dragomir98.github.io/mern-blogs/) for reading, creating, editing and deleting blogs
 
 ### Tools used for constructing the application:
 - [Vite](https://vitejs.dev/guide/) (Build tool)
