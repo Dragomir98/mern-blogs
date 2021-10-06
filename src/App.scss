@@ -161,15 +161,15 @@ div[role="alert"] {
     display: flex;
     align-items: center;
   }
+
+  a:hover {
+    cursor: pointer;
+  }
 }
 
 /* image styles */
 .poster-image {
   max-height: 300px;
-}
-
-.card-image {
-  max-height: 190px;
 }
 
 .readlist-image {
@@ -297,11 +297,11 @@ div {
 
   .profile-data {
     h6 {
-      @include line-clamp(4, vertical, auto);
+      @include line-clamp(4, vertical, initial);
     }
 
     .verification {
-      @include flex-container(center, center);
+      @include flex-container(start, center);
     }
     .verified {
       svg {
@@ -383,12 +383,4 @@ div {
   pointer-events: none;
   box-shadow: none;
   color: var(--theme-primary-color);
-}
-
-//@media
-
-@media screen and (max-width: 600px) {
-  .poster-container {
-    display: none !important;
-  }
 }
