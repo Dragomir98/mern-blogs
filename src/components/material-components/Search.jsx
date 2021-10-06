@@ -46,7 +46,7 @@ export default function Search({ input: keyword, onChange: setKeyword }) {
   }, []);
 
   return (
-    <Box width="100%" display="flex" justifyContent="center" py={1}>
+    <Box width="100%" display="flex" justifyContent="center" py={2}>
       <Box
         display="flex"
         alignItems="center"

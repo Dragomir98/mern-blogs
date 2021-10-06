@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const uiSlice = createSlice({
   name: "ui",
   initialState: {
-    showSearch: false,
+    showSearch: true,
   },
   reducers: {
     toggleSearch(state) {
