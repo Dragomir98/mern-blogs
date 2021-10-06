@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { Provider } from "react-redux";
 import store from "./store/store";
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter basename="/mern-blogs/">
+    <HashRouter>
       <Auth0Provider
         domain={import.meta.env.VITE_DOMAIN}
         clientId={import.meta.env.VITE_CLIENT_ID}
@@ -18,7 +18,7 @@ ReactDOM.render(
       >
         <App />
       </Auth0Provider>
-    </BrowserRouter>
+    </HashRouter>
   </Provider>,
   document.getElementById("root")
 );

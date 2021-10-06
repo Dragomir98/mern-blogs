@@ -2,7 +2,7 @@ import "./App.scss";
 import { Redirect, Route, Switch } from "react-router-dom";
 import BlogsList from "./components/blog-operations/BlogsList";
 import Layout from "./layout/Layout";
-import { createTheme, MuiThemeProvider } from "@material-ui/core";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { lazy } from "react";
 import { Suspense } from "react";
 import Loading from "./components/material-components/Loading";
@@ -40,7 +40,7 @@ const Readlist = lazy(() => import("./components/Readlist"));
 
 export default function App() {
   return (
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <Layout>
         <Suspense fallback={<Loading />}>
           <Switch>
@@ -57,6 +57,6 @@ export default function App() {
           </Switch>
         </Suspense>
       </Layout>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 }
