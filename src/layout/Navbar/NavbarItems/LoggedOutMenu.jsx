@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 
 const LoggedOutMenu = (props) => (
   <Button variant="contained" color="secondary" onClick={props.onLogin}>

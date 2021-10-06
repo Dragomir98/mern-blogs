@@ -7,12 +7,12 @@ import {
   Container,
   Divider,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import React from "react";
 import { useState } from "react";
-import CancelIcon from "@material-ui/icons/Cancel";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import { makeStyles } from "@material-ui/core";
+import CancelIcon from "@mui/icons-material/Cancel";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import makeStyles from '@mui/styles/makeStyles';
 
 const styles = makeStyles((theme) => ({
   flexCenter: {
@@ -32,7 +32,7 @@ const styles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(1),
     paddingTop: theme.spacing(1),
   },
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down('md')]: {
     userLayout: {
       flexDirection: "column",
     },

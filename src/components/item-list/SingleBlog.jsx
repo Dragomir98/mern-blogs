@@ -8,13 +8,14 @@ import {
   Typography,
   CardActions,
   Tooltip,
-} from "@material-ui/core";
+} from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import { Link } from "react-router-dom";
 import apis from "../../api";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
-import BookmarkIcon from "@material-ui/icons/Bookmark";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useAuth0 } from "@auth0/auth0-react";
 import Image from "../material-components/ImageContainer";
 import { useHistory } from "react-router";
@@ -24,6 +25,19 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import ActionButton from "../material-components/ActionButton";
 
+const useStyles = makeStyles((theme) => ({
+  cardTitle: {
+    maxWidth: "250px",
+    textOverflow: "ellipsis",
+    overflow: "hidden",
+  },
+  [theme.breakpoints.up("sm")]: {
+    cardImage: {
+      maxHeight: "150px",
+    },
+  },
+}));
+
 export default function SingleBlog(props) {
   const { _id, createdAt, title, image, description, toReadLater } = props.data;
   const { isAuthenticated } = useAuth0();
@@ -31,6 +45,7 @@ export default function SingleBlog(props) {
   const dispatch = useDispatch();
   const readlist = useSelector((state) => state.readlist.items);
   const [readState, setReadState] = useState(false);
+  const classes = useStyles();
 
   useEffect(() => {
     const existingIndex = readlist.findIndex((item) => item.id === _id);
@@ -63,7 +78,7 @@ export default function SingleBlog(props) {
   };
 
   return (
-    <Grid item xs={12} sm={6} md={4} key={_id}>
+    <Grid item xs={12} sm={6} lg={4} key={_id}>
       <Card>
         <CardActionArea>
           <Box p={1}>
@@ -93,12 +108,17 @@ export default function SingleBlog(props) {
                 </Tooltip>
               )}
             </Box>
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.cardTitle}
+            >
               {title}
             </Typography>
           </Box>
 
-          <Image url={image} alt={title} className="card-image" />
+          <Image url={image} alt={title} className={classes.cardImage} />
 
           <CardContent>
             <Typography component="p" className="description part">

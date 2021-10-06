@@ -1,4 +1,4 @@
-import { CardMedia } from "@material-ui/core";
+import { CardMedia } from "@mui/material";
 
 const Image = (props) => {
   return (

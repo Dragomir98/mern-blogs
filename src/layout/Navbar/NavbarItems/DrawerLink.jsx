@@ -3,7 +3,7 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import { NavLink } from "react-router-dom";
 
 const DrawerLink = (props) => {

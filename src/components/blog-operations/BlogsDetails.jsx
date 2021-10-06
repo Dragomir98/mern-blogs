@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useEffect } from "react";
 import {
@@ -8,25 +8,25 @@ import {
   CardActions,
   Container,
   Divider,
-  makeStyles,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import { Link } from "react-router-dom";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import { useAuth0 } from "@auth0/auth0-react";
 import api from "../../api";
 import Loading from "../material-components/Loading";
 import { addToList, removeFromList } from "../../store/readlist-slice";
-import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
-import BookmarkIcon from "@material-ui/icons/Bookmark";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import Image from "../material-components/ImageContainer";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import ActionButton from "../material-components/ActionButton";
 
 const useStyles = makeStyles((theme) => ({
-  [theme.breakpoints.down("xs")]: {
+  [theme.breakpoints.down("sm")]: {
     blogImage: {
       maxHeight: "150px",
     },

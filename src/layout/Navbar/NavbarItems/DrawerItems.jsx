@@ -3,12 +3,12 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import { Link } from "react-router-dom";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import HomeIcon from "@material-ui/icons/Home";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
-import { makeStyles } from "@material-ui/styles";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import HomeIcon from "@mui/icons-material/Home";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { makeStyles } from "@mui/styles";
 import DrawerLink from "./DrawerLink";
 
 const useStyles = makeStyles(() => ({

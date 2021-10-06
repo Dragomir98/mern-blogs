@@ -1,4 +1,4 @@
-import { Alert } from "@material-ui/lab";
+import { Alert } from '@mui/material';
 
 export const ErrorAlert = ({ message }) => (
   <Alert variant="filled" severity="error">
@@ -12,10 +12,10 @@ export const SuccessAlert = ({ message }) => (
   </Alert>
 );
 
-export const NotLoggedInAlert = (props) => {
+export const AlertMessage = ({ children, type, classes }) => {
   return (
-    <Alert severity="info" className={props.classes}>
-      <strong>{props.message}</strong>
+    <Alert severity={type} className={classes}>
+      {children}
     </Alert>
   );
 };

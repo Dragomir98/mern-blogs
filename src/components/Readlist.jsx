@@ -5,17 +5,21 @@ import {
   Card,
   Divider,
   Button,
-} from "@material-ui/core";
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
-import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 import Loading from "./material-components/Loading";
 import { withAuthenticationRequired } from "@auth0/auth0-react";
 import Image from "./material-components/ImageContainer";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@mui/styles";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { removeFromList } from "../store/readlist-slice";
+import {
+  fetchAsyncBlogs,
+  removeFromList,
+  updateAsyncBlog,
+} from "../store/readlist-slice";
 
 const styles = makeStyles((theme) => ({
   [theme.breakpoints.up("xs")]: {
@@ -30,7 +34,7 @@ const styles = makeStyles((theme) => ({
       maxWidth: "40%",
     },
   },
-  [theme.breakpoints.down("xs")]: {
+  [theme.breakpoints.down('sm')]: {
     itemContainer: {
       display: "block",
     },
@@ -49,15 +53,29 @@ function ReadLater() {
   const classes = styles();
   const dispatch = useDispatch();
   const readItems = useSelector((state) => state.readlist.items);
-  const [readList, setReadList] = useState([]);
+  // const readItems = useSelector((state) => state.readlist.items).reduce(
+  //   (arr, item) => {
+  //     if (item.toReadLater === true) {
+  //       arr.push(item);
+  //     }
+  //     return arr;
+  //   },
+  //   []
+  // );
+
+  // const updateReadState = (id, updatedData) => {
+  //   dispatch(updateAsyncBlog(id, updatedData));
+  //   console.log(id);
+  //   console.log(updatedData);
+  // };
 
   const removeItemFromList = (id) => {
     dispatch(removeFromList(id));
   };
 
-  useEffect(() => {
-    setReadList(readItems);
-  }, [readItems]);
+  // useEffect(() => {
+  //   dispatch(fetchAsyncBlogs());
+  // }, [dispatch]);
 
   return (
     <Box
@@ -76,12 +94,12 @@ function ReadLater() {
         margin="auto 0"
         width="100%"
       >
-        {readList.length === 0 ? (
+        {readItems.length === 0 ? (
           <Typography variant="h6" align="center">
             You haven't added items to the reading list yet.
           </Typography>
         ) : (
-          readList.map((item) => (
+          readItems.map((item) => (
             <Box
               component={Card}
               key={item.id}
@@ -90,6 +108,7 @@ function ReadLater() {
               flexDirection="row"
               my={2}
               className={classes.readItem}
+              key={item._id}
             >
               <Image
                 url={item.image}
@@ -128,10 +147,13 @@ function ReadLater() {
                   <Button
                     variant="contained"
                     color="primary"
-                    // onClick={() =>
-                    //   removeFromList(item._id, item, item.toReadLater)
-                    // }
                     onClick={() => removeItemFromList(item.id)}
+                    // onClick={() =>
+                    //   updateReadState(item._id, {
+                    //     ...item,
+                    //     toReadLater: false,
+                    //   })
+                    // }
                   >
                     <DeleteIcon />
                   </Button>

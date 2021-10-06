@@ -9,7 +9,7 @@ import {
   Container,
   FormGroup,
   FormControl,
-} from "@material-ui/core";
+} from "@mui/material";
 import { ErrorAlert, SuccessAlert } from "../material-components/Alerts";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import axios from "axios";

@@ -1,5 +1,5 @@
-import { Link } from "@material-ui/core";
-import { Box, Container, Divider, Grid, Typography } from "@material-ui/core";
+import { Link } from "@mui/material";
+import { Box, Container, Divider, Grid, Typography } from "@mui/material";
 
 export default function Footer() {
   return (

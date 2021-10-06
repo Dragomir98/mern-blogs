@@ -1,15 +1,7 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  makeStyles,
-  Menu,
-  MenuItem,
-  Tooltip,
-  Typography,
-} from "@material-ui/core";
+import { Avatar, Box, Button, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 import { Link, NavLink } from "react-router-dom";
-import MenuBookIcon from "@material-ui/icons/MenuBook";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 
 const useStyles = makeStyles(() => ({
   iconButton: {

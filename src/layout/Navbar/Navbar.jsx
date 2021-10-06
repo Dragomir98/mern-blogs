@@ -7,9 +7,9 @@ import {
   Box,
   Drawer,
   Divider,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
-import MenuIcon from "@material-ui/icons/Menu";
+} from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -93,7 +93,7 @@ export default function Navbar() {
         color="inherit"
         aria-label="menu"
         onClick={() => setOpen(true)}
-      >
+        size="large">
         <MenuIcon />
       </IconButton>
       <Drawer open={open} anchor={"left"} onClose={() => setOpen(false)}>

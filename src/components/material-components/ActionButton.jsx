@@ -1,4 +1,4 @@
-import { Tooltip } from "@material-ui/core";
+import { Tooltip } from "@mui/material";
 
 const ActionButton = (props) => (
   <Tooltip title={props.tooltip}>
