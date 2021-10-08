@@ -17,13 +17,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useAuth0 } from "@auth0/auth0-react";
 import api from "../../api";
 import Loading from "../material-components/Loading";
-import { addToList, removeFromList } from "../../store/readlist-slice";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
 import Image from "../material-components/ImageContainer";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import ActionButton from "../material-components/ActionButton";
+import ReadlistToggler from "../readlist/ReadlistToggler";
 
 const useStyles = makeStyles((theme) => ({
   [theme.breakpoints.down("sm")]: {
@@ -39,25 +36,9 @@ export default function BlogDetails() {
   const history = useHistory();
   const { isAuthenticated } = useAuth0();
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
   const readlist = useSelector((state) => state.readlist.items);
   const [readState, setReadState] = useState(false);
   const classes = useStyles();
-
-  const addToReadlistHandler = () => {
-    dispatch(
-      addToList({
-        id: currentBlog._id,
-        title: currentBlog.title,
-        image: currentBlog.image,
-        description: currentBlog.description,
-      })
-    );
-  };
-
-  const removeFromReadlistHandler = () => {
-    dispatch(removeFromList(id));
-  };
 
   useEffect(() => {
     (async function () {
@@ -107,17 +88,7 @@ export default function BlogDetails() {
                     Submitted on {currentBlog.createdAt}
                   </Typography>
                   {isAuthenticated && (
-                    <Box>
-                      {readState ? (
-                        <Button onClick={() => removeFromReadlistHandler()}>
-                          <BookmarkIcon color="secondary" />
-                        </Button>
-                      ) : (
-                        <Button onClick={() => addToReadlistHandler()}>
-                          <BookmarkBorderIcon color="secondary" />
-                        </Button>
-                      )}
-                    </Box>
+                    <ReadlistToggler data={currentBlog} readState={readState} />
                   )}
                 </Box>
                 <Typography variant="h4">{currentBlog.title}</Typography>

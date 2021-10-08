@@ -14,16 +14,13 @@ import { Link } from "react-router-dom";
 import apis from "../../api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useAuth0 } from "@auth0/auth0-react";
 import Image from "../material-components/ImageContainer";
 import { useHistory } from "react-router";
-import { useDispatch } from "react-redux";
-import { addToList, removeFromList } from "../../store/readlist-slice";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import ActionButton from "../material-components/ActionButton";
+import ReadlistToggler from "../readlist/ReadlistToggler";
 
 const useStyles = makeStyles((theme) => ({
   cardTitle: {
@@ -42,7 +39,6 @@ export default function SingleBlog(props) {
   const { _id, createdAt, title, image, description, toReadLater } = props.data;
   const { isAuthenticated } = useAuth0();
   const history = useHistory();
-  const dispatch = useDispatch();
   const readlist = useSelector((state) => state.readlist.items);
   const [readState, setReadState] = useState(false);
   const classes = useStyles();
@@ -56,21 +52,6 @@ export default function SingleBlog(props) {
       setReadState(false);
     }
   }, [readlist, readState]);
-
-  const addToReadlistHandler = () => {
-    dispatch(
-      addToList({
-        id: _id,
-        title,
-        image,
-        description,
-      })
-    );
-  };
-
-  const removeFromReadlistHandler = () => {
-    dispatch(removeFromList(_id));
-  };
 
   const handleDeleteBlog = (id) => {
     apis.deleteBlogById(id);
@@ -89,23 +70,24 @@ export default function SingleBlog(props) {
             >
               <span>Posted on {createdAt.substr(0, 10)}</span>
               {isAuthenticated && (
-                <Tooltip
-                  title={`${
-                    readState ? "Remove from Readlist" : "Add to Readlist"
-                  }`}
-                >
-                  {readState ? (
-                    <BookmarkIcon
-                      color="secondary"
-                      onClick={() => removeFromReadlistHandler()}
-                    />
-                  ) : (
-                    <BookmarkBorderIcon
-                      color="secondary"
-                      onClick={() => addToReadlistHandler()}
-                    />
-                  )}
-                </Tooltip>
+                // <Tooltip
+                //   title={`${
+                //     readState ? "Remove from Readlist" : "Add to Readlist"
+                //   }`}
+                // >
+                //   {readState ? (
+                //     <BookmarkIcon
+                //       color="secondary"
+                //       onClick={() => removeFromReadlistHandler()}
+                //     />
+                //   ) : (
+                //     <BookmarkBorderIcon
+                //       color="secondary"
+                //       onClick={() => addToReadlistHandler()}
+                //     />
+                //   )}
+                // </Tooltip>
+                <ReadlistToggler data={props.data} readState={readState} />
               )}
             </Box>
             <Typography
