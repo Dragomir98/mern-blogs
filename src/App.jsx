@@ -30,9 +30,9 @@ const theme = createTheme({
 const BlogsAdd = lazy(() => import("./components/blog-pages/BlogsAdd"));
 const BlogsUpdate = lazy(() => import("./components/blog-pages/BlogsUpdate"));
 const BlogDetails = lazy(() => import("./components/blog-pages/BlogsDetails"));
-const UserData = lazy(() => import("./components/UserData"));
+const UserData = lazy(() => import("./components/account/UserData"));
 const PageNotFound = lazy(() => import("./404"));
-const Readlist = lazy(() => import("./components/Readlist"));
+const Readlist = lazy(() => import("./components/readlist/Readlist"));
 
 export default function App() {
   return (
