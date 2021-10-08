@@ -16,6 +16,7 @@ const theme = createTheme({
       main: "#7351c4",
     },
   },
+  spacing: [0, 5, 10, 15, 25, 50],
   breakpoints: {
     values: {
       xs: 0,

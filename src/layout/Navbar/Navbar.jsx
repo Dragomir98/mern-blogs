@@ -17,7 +17,7 @@ import DrawerItems from "./NavbarItems/DrawerItems";
 import LoggedOutMenu from "./NavbarItems/LoggedOutMenu";
 import LoggedInMenu from "./NavbarItems/LoggedInMenu";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -28,10 +28,10 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
   },
   addLink: {
-    marginLeft: "5px",
+    marginLeft: theme.spacing(1),
   },
   homeLink: {
-    marginRight: "5px",
+    marginRight: theme.spacing(1),
     position: "relative",
   },
 }));
@@ -93,7 +93,8 @@ export default function Navbar() {
         color="inherit"
         aria-label="menu"
         onClick={() => setOpen(true)}
-        size="large">
+        size="large"
+      >
         <MenuIcon />
       </IconButton>
       <Drawer open={open} anchor={"left"} onClose={() => setOpen(false)}>

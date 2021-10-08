@@ -1,19 +1,27 @@
-import { Avatar, Box, Button, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
-import makeStyles from '@mui/styles/makeStyles';
+import {
+  Avatar,
+  Box,
+  Button,
+  Menu,
+  MenuItem,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import { Link, NavLink } from "react-router-dom";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   iconButton: {
     cursor: "pointer",
   },
   homeLink: {
-    marginRight: "5px",
+    marginRight: theme.spacing(1),
     position: "relative",
   },
   readlistLink: {
-    marginRight: "10px",
-    padding: "5px !important",
+    marginRight: theme.spacing(2),
+    padding: `${theme.spacing(1)} !important`,
   },
 }));
 

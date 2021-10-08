@@ -32,6 +32,10 @@ const styles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(1),
     paddingTop: theme.spacing(1),
   },
+  data: {
+    padding: theme.spacing(3),
+    boxSizing: "border-box",
+  },
   [theme.breakpoints.down("md")]: {
     userLayout: {
       flexDirection: "column",
@@ -43,13 +47,12 @@ const styles = makeStyles((theme) => ({
       alignItems: "center",
       paddingTop: theme.spacing(3),
     },
-    data: {
-      paddingLeft: "15px",
-      paddingRight: "15px",
-      boxSizing: "border-box",
-    },
     img: {
       width: "200px",
+    },
+    metaData: {
+      paddingTop: theme.spacing(5),
+      paddingBottom: theme.spacing(5),
     },
   },
 }));
@@ -114,7 +117,6 @@ export default function UserData() {
               flexGrow={1}
               height="100%"
               width="100%"
-              p={2}
               boxSizing="border-box"
             >
               <Typography variant="h6" className={classes.dataHeading}>
@@ -139,7 +141,10 @@ export default function UserData() {
                 )}
               </Typography>
               <Divider />
-              <Box className={classes.flexCenter} height="100%">
+              <Box
+                className={`${classes.flexCenter} ${classes.metaData}`}
+                height="100%"
+              >
                 {userMetadata ? (
                   <pre>{JSON.stringify(userMetadata, null, 2)}</pre>
                 ) : (

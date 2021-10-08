@@ -89,10 +89,15 @@ header {
   }
 }
 
+//footer styles
 footer {
   &.MuiBox-root {
     background-color: var(--theme-primary-color);
     color: var(--theme-third-color);
+
+    div a {
+      color: var(--theme-third-color);
+    }
   }
 
   .MuiDivider-root {
@@ -110,6 +115,7 @@ footer {
   margin-top: auto;
 }
 
+//form container
 .custom-form-container {
   height: 100%;
   display: flex !important;
@@ -172,6 +178,7 @@ div[role="alert"] {
   max-height: 300px;
 }
 
+// readlist styles
 .readlist-image {
   max-width: 50%;
   min-height: 100%;
@@ -313,7 +320,6 @@ div {
     .not-verified {
       svg {
         margin-left: $size-xs;
-        color: red;
       }
     }
   }
