@@ -21,6 +21,7 @@ import Image from "../material-components/ImageContainer";
 import { useSelector } from "react-redux";
 import ActionButton from "../material-components/ActionButton";
 import ReadlistToggler from "../readlist/ReadlistToggler";
+import { readlistItems } from "../../store/readlist-slice";
 
 const useStyles = makeStyles((theme) => ({
   [theme.breakpoints.down("sm")]: {
@@ -32,12 +33,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BlogDetails() {
   const { id } = useParams();
-  const [currentBlog, setCurrentBlog] = useState("");
   const history = useHistory();
-  const { isAuthenticated } = useAuth0();
+  const [currentBlog, setCurrentBlog] = useState("");
   const [loading, setLoading] = useState(false);
-  const readlist = useSelector((state) => state.readlist.items);
   const [readState, setReadState] = useState(false);
+  const { isAuthenticated } = useAuth0();
+  const readlist = useSelector(readlistItems);
   const classes = useStyles();
 
   useEffect(() => {
