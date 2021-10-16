@@ -30,11 +30,13 @@ const ReadlistToggler = ({ readState, data }) => {
         <BookmarkIcon
           color="secondary"
           onClick={() => removeFromReadlistHandler()}
+          className="toggler"
         />
       ) : (
         <BookmarkBorderIcon
           color="secondary"
           onClick={() => addToReadlistHandler()}
+          className="toggler"
         />
       )}
     </Tooltip>

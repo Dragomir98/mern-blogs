@@ -1,25 +1,11 @@
-import {
-  Box,
-  Typography,
-  Container,
-  Card,
-  Divider,
-  Button,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Link } from "react-router-dom";
-import Loading from "../material-components/Loading";
+import { Box, Typography, Container } from "@mui/material";
+import Loading from "../UI/Loading";
 import { withAuthenticationRequired } from "@auth0/auth0-react";
-import Image from "../material-components/ImageContainer";
 import { makeStyles } from "@mui/styles";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import {
-  fetchAsyncBlogs,
-  removeFromList,
-  updateAsyncBlog,
-} from "../../store/readlist-slice";
+import { readlistItems } from "../../store/readlist-slice";
+import ReadlistItem from "./ReadlistItem";
 
 const styles = makeStyles((theme) => ({
   [theme.breakpoints.up("xs")]: {
@@ -51,31 +37,7 @@ const styles = makeStyles((theme) => ({
 
 function ReadLater() {
   const classes = styles();
-  const dispatch = useDispatch();
-  const readItems = useSelector((state) => state.readlist.items);
-  // const readItems = useSelector((state) => state.readlist.items).reduce(
-  //   (arr, item) => {
-  //     if (item.toReadLater === true) {
-  //       arr.push(item);
-  //     }
-  //     return arr;
-  //   },
-  //   []
-  // );
-
-  // const updateReadState = (id, updatedData) => {
-  //   dispatch(updateAsyncBlog(id, updatedData));
-  //   console.log(id);
-  //   console.log(updatedData);
-  // };
-
-  const removeItemFromList = (id) => {
-    dispatch(removeFromList(id));
-  };
-
-  // useEffect(() => {
-  //   dispatch(fetchAsyncBlogs());
-  // }, [dispatch]);
+  const readItems = useSelector(readlistItems);
 
   return (
     <Box
@@ -85,6 +47,7 @@ function ReadLater() {
       alignItems="center"
       flexDirection="column"
       className={classes.itemContainer}
+      height={`${readItems.length === 0 ? "100%" : "auto"}`}
     >
       <Box
         display="flex"
@@ -93,6 +56,7 @@ function ReadLater() {
         flexDirection="column"
         margin="auto 0"
         width="100%"
+        height={`${readItems.length === 0 ? "100%" : "auto"}`}
       >
         {readItems.length === 0 ? (
           <Typography variant="h6" align="center">
@@ -100,66 +64,7 @@ function ReadLater() {
           </Typography>
         ) : (
           readItems.map((item) => (
-            <Box
-              component={Card}
-              key={item.id}
-              width="100%"
-              display="flex"
-              flexDirection="row"
-              my={2}
-              className={classes.readItem}
-              key={item.id}
-            >
-              <Image
-                url={item.image}
-                alt={item.title}
-                className={`card-image readlist-image ${classes.readItemImage}`}
-              />
-              <Box flexGrow={1} p={2} display="flex" flexDirection="column">
-                <Typography variant="h6">{item.title}</Typography>
-                <Divider />
-
-                <Box
-                  component={Typography}
-                  variant="body1"
-                  className="description readlist-details"
-                  pb={2}
-                >
-                  {item.description}
-                </Box>
-
-                <Box
-                  className="readlist-actions"
-                  mt="auto"
-                  display="flex"
-                  justifyContent="flex-end"
-                >
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    className="btn-spacing-right"
-                    component={Link}
-                    to={`/blogs/${item.id}`}
-                  >
-                    Read
-                  </Button>
-
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => removeItemFromList(item.id)}
-                    // onClick={() =>
-                    //   updateReadState(item._id, {
-                    //     ...item,
-                    //     toReadLater: false,
-                    //   })
-                    // }
-                  >
-                    <DeleteIcon />
-                  </Button>
-                </Box>
-              </Box>
-            </Box>
+            <ReadlistItem item={item} classes={classes} key={item.id} />
           ))
         )}
       </Box>
