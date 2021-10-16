@@ -11,16 +11,18 @@ import {
 } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 import { Link } from "react-router-dom";
-import apis from "../../api";
+import apis from "../../../api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useAuth0 } from "@auth0/auth0-react";
-import Image from "../material-components/ImageContainer";
+import Image from "../../UI/ImageContainer";
 import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import ActionButton from "../material-components/ActionButton";
-import ReadlistToggler from "../readlist/ReadlistToggler";
+import ActionButton from "../../UI/ActionButton";
+import ReadlistToggler from "../../readlist/ReadlistToggler";
+import { readlistItems } from "../../../store/readlist-slice";
+import { convertFromJSONToHTML } from "../../editor/BlogEditor";
 
 const useStyles = makeStyles((theme) => ({
   cardTitle: {
@@ -36,10 +38,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SingleBlog(props) {
-  const { _id, createdAt, title, image, description, toReadLater } = props.data;
+  const { _id, createdAt, title, image, description } = props.data;
   const { isAuthenticated } = useAuth0();
   const history = useHistory();
-  const readlist = useSelector((state) => state.readlist.items);
+  const readlist = useSelector(readlistItems);
   const [readState, setReadState] = useState(false);
   const classes = useStyles();
 
@@ -48,9 +50,9 @@ export default function SingleBlog(props) {
     const existingItem = readlist[existingIndex];
     if (existingItem) {
       setReadState(true);
-    } else {
-      setReadState(false);
+      return;
     }
+    setReadState(false);
   }, [readlist, readState]);
 
   const handleDeleteBlog = (id) => {
@@ -70,23 +72,6 @@ export default function SingleBlog(props) {
             >
               <span>Posted on {createdAt.substr(0, 10)}</span>
               {isAuthenticated && (
-                // <Tooltip
-                //   title={`${
-                //     readState ? "Remove from Readlist" : "Add to Readlist"
-                //   }`}
-                // >
-                //   {readState ? (
-                //     <BookmarkIcon
-                //       color="secondary"
-                //       onClick={() => removeFromReadlistHandler()}
-                //     />
-                //   ) : (
-                //     <BookmarkBorderIcon
-                //       color="secondary"
-                //       onClick={() => addToReadlistHandler()}
-                //     />
-                //   )}
-                // </Tooltip>
                 <ReadlistToggler data={props.data} readState={readState} />
               )}
             </Box>
@@ -102,11 +87,11 @@ export default function SingleBlog(props) {
 
           <Image url={image} alt={title} className={classes.cardImage} />
 
-          <CardContent>
-            <Typography component="p" className="description part">
-              {description}
-            </Typography>
-          </CardContent>
+          <Box
+            dangerouslySetInnerHTML={convertFromJSONToHTML(description)}
+            px={3}
+            className="description-part"
+          ></Box>
 
           <Box component={CardActions} justifyContent="space-between">
             <Tooltip title="Read blog">

@@ -191,6 +191,11 @@ div[role="alert"] {
   padding: 0 !important;
 }
 
+.toggler {
+  cursor: pointer;
+}
+//
+
 .user-select-menu {
   padding: $size-l;
 
@@ -200,29 +205,19 @@ div[role="alert"] {
   }
 }
 
+/*description field styling*/
 .description {
-  word-break: break-word;
-  display: -webkit-box;
+  &-part {
+    @include line-clamp(2, vertical, hidden);
+  }
 
-  &.full {
+  &-full {
     text-indent: ($size-l * 2) + 8;
     display: inline-block;
     text-align: justify;
   }
-
-  &.part {
-    @include line-clamp(2, vertical, hidden);
-  }
-  &::first-letter {
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #000;
-  }
 }
-
-.blog-description {
-  @include line-clamp(2, vertical, hidden);
-}
+//
 
 .btn-spacing-right {
   margin-right: $size-s !important;
@@ -389,4 +384,86 @@ div {
   pointer-events: none;
   box-shadow: none;
   color: var(--theme-primary-color);
+}
+
+/*editor styles*/
+.wrapper-class {
+  border-radius: 5px;
+
+  .rdw-editor-toolbar .toolbar-class {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.editor-class {
+  border: 1px solid grey;
+  padding: 15px;
+}
+
+.toolbar-class {
+  background-color: var(--theme-primary-color);
+  border: 1px solid grey;
+  padding: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 !important;
+
+  &,
+  .rdw-inline-wrapper,
+  .rdw-option-wrapper,
+  .rdw-fontsize-wrapper,
+  .rdw-block-wrapper,
+  .rdw-fontfamily-wrapper,
+  .rdw-fontfamily-wrapper,
+  .rdw-text-align-wrapper,
+  .rdw-colorpicker-wrapper,
+  .rdw-list-wrapper,
+  .rdw-link-wrapper,
+  .rdw-history-wrapper {
+    cursor: pointer;
+    border-radius: 2px;
+    @include flex-container(center, center);
+    margin: 2px;
+  }
+
+  .rdw-option-wrapper {
+    background-color: white;
+    padding: 2px;
+    border: 1px solid grey;
+    @include flex-container(center, center);
+    height: 20px;
+  }
+
+  .rdw-fontsize-wrapper,
+  .rdw-block-wrapper,
+  .rdw-fontfamily-wrapper {
+    position: relative;
+    background-color: white;
+    height: 20px;
+    padding: 2px;
+    border: 1px solid grey;
+  }
+
+  .rdw-dropdown-optionwrapper,
+  .rdw-emoji-modal {
+    list-style-type: none;
+    position: absolute;
+    z-index: 10;
+    background-color: white;
+    top: 0;
+    padding: 0;
+    transition: all ease-in-out 0.2s;
+    box-shadow: 0 2px 4px;
+    border-radius: 5px;
+    text-align: center;
+
+    .rdw-dropdownoption-default {
+      padding: 5px;
+      &:hover {
+        background-color: var(--theme-primary-color);
+        color: var(--theme-third-color);
+      }
+    }
+  }
 }

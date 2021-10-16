@@ -1,11 +1,11 @@
 import "./App.scss";
 import { Redirect, Route, Switch } from "react-router-dom";
-import BlogsList from "./components/blog-pages/BlogsList";
+import Home from "./components/pages/Home";
 import Layout from "./layout/Layout";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { lazy } from "react";
 import { Suspense } from "react";
-import Loading from "./components/material-components/Loading";
+import Loading from "./components/UI/Loading";
 
 const theme = createTheme({
   palette: {
@@ -28,9 +28,9 @@ const theme = createTheme({
   },
 });
 
-const BlogsAdd = lazy(() => import("./components/blog-pages/BlogsAdd"));
-const BlogsUpdate = lazy(() => import("./components/blog-pages/BlogsUpdate"));
-const BlogDetails = lazy(() => import("./components/blog-pages/BlogsDetails"));
+const BlogAdd = lazy(() => import("./components/pages/BlogAdd"));
+const BlogUpdate = lazy(() => import("./components/pages/BlogUpdate"));
+const BlogDetails = lazy(() => import("./components/pages/BlogDetails"));
 const UserData = lazy(() => import("./components/account/UserData"));
 const PageNotFound = lazy(() => import("./404"));
 const Readlist = lazy(() => import("./components/readlist/Readlist"));
@@ -44,11 +44,11 @@ export default function App() {
             <Route exact path="/">
               <Redirect to="/blogs" />
             </Route>
-            <Route path="/blogs" exact component={BlogsList} />
+            <Route path="/blogs" exact component={Home} />
             <Route path="/blogs/read-later" exact component={Readlist} />
             <Route path="/blogs/:id" exact component={BlogDetails} />
-            <Route path="/blog/add" exact component={BlogsAdd} />
-            <Route path="/blogs/update/:id" exact component={BlogsUpdate} />
+            <Route path="/blog/add" exact component={BlogAdd} />
+            <Route path="/blogs/update/:id" exact component={BlogUpdate} />
             <Route path="/account" exact component={UserData} />
             <Route path="*" component={PageNotFound} />
           </Switch>

@@ -16,12 +16,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useAuth0 } from "@auth0/auth0-react";
 import api from "../../api";
-import Loading from "../material-components/Loading";
-import Image from "../material-components/ImageContainer";
+import Loading from "../UI/Loading";
+import Image from "../UI/ImageContainer";
 import { useSelector } from "react-redux";
-import ActionButton from "../material-components/ActionButton";
+import ActionButton from "../UI/ActionButton";
 import ReadlistToggler from "../readlist/ReadlistToggler";
 import { readlistItems } from "../../store/readlist-slice";
+import { convertFromJSONToHTML } from "../editor/BlogEditor";
 
 const useStyles = makeStyles((theme) => ({
   [theme.breakpoints.down("sm")]: {
@@ -71,7 +72,11 @@ export default function BlogDetails() {
         {loading ? (
           <Loading />
         ) : (
-          <Box component={Card} mb={2}>
+          <Box
+            component={Card}
+            mb={2}
+            sx={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}
+          >
             <Image
               url={currentBlog.image}
               alt={currentBlog.title}
@@ -95,14 +100,13 @@ export default function BlogDetails() {
                 <Typography variant="h4">{currentBlog.title}</Typography>
               </Box>
               <Divider />
-              <Box
-                component={Typography}
-                variant="body1"
-                className="description full"
-                py={2}
-              >
-                {currentBlog.description}
-              </Box>
+
+              <div
+                dangerouslySetInnerHTML={convertFromJSONToHTML(
+                  currentBlog.description
+                )}
+              ></div>
+
               <Divider />
               <Box
                 component={CardActions}

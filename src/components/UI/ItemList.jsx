@@ -1,5 +1,5 @@
 import { Box, Container, Grid } from "@mui/material";
-import SingleBlog from "./SingleBlog";
+import SingleBlog from "../pages/items/SingleBlog";
 
 const ItemList = ({ list }) => {
   return (
