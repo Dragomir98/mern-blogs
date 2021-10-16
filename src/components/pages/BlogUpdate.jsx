@@ -1,15 +1,7 @@
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import api from "../../api";
-import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-  Container,
-  FormGroup,
-  FormControl,
-} from "@mui/material";
+import { Box, Button, TextField, FormGroup, FormControl } from "@mui/material";
 import axios from "axios";
 import { ErrorAlert, SuccessAlert } from "../UI/Alerts";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
@@ -42,6 +34,8 @@ function UpdateBlog() {
   const imageIsValid = image.trim().length > 0;
 
   useEffect(() => {
+    document.title = `${import.meta.env.VITE_PROJECT_TITLE} | Update ${id}`;
+
     (async function () {
       setIsLoading(true);
       const token = await getAccessTokenSilently();

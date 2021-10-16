@@ -2,10 +2,10 @@ import { Box, Typography, Container } from "@mui/material";
 import Loading from "../UI/Loading";
 import { withAuthenticationRequired } from "@auth0/auth0-react";
 import { makeStyles } from "@mui/styles";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { readlistItems } from "../../store/readlist-slice";
 import ReadlistItem from "./ReadlistItem";
+import { useEffect } from "react";
 
 const styles = makeStyles((theme) => ({
   [theme.breakpoints.up("xs")]: {
@@ -38,6 +38,10 @@ const styles = makeStyles((theme) => ({
 function ReadLater() {
   const classes = styles();
   const readItems = useSelector(readlistItems);
+
+  useEffect(() => {
+    document.title = "Readlist";
+  }, []);
 
   return (
     <Box

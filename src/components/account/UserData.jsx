@@ -8,7 +8,7 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -62,6 +62,10 @@ export default function UserData() {
     useAuth0();
   const [userMetadata, setUserMetadata] = useState(null);
   const classes = styles();
+
+  useEffect(() => {
+    document.title = `${import.meta.env.VITE_PROJECT_TITLE} | Account`;
+  }, []);
 
   if (isLoading) {
     return (

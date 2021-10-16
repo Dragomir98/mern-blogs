@@ -43,6 +43,8 @@ export default function BlogDetails() {
   const classes = useStyles();
 
   useEffect(() => {
+    document.title = `${import.meta.env.VITE_PROJECT_TITLE} | Blog ${id}`;
+
     (async function () {
       setLoading(true);
       const blog = await api.getBlogById(id);

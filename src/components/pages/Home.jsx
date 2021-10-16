@@ -35,6 +35,8 @@ function BlogsList() {
   };
 
   useEffect(() => {
+    document.title = `${import.meta.env.VITE_PROJECT_TITLE} | Home`;
+
     const getData = async () => {
       setLoading(true);
 

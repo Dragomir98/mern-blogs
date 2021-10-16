@@ -1,15 +1,7 @@
 import { withAuthenticationRequired } from "@auth0/auth0-react";
-import {
-  Box,
-  Button,
-  Container,
-  FormControl,
-  FormGroup,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, FormControl, FormGroup, TextField } from "@mui/material";
 import api from "../../api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Prompt } from "react-router";
 import { ErrorAlert, SuccessAlert } from "../UI/Alerts";
 import { EditorState, convertToRaw } from "draft-js";
@@ -63,12 +55,16 @@ function NewBlog() {
     } catch (err) {
       setFormMessage(<ErrorAlert message="Error during form submisson!" />);
     }
-    setLoading(false);
+    setIsLoading(false);
   };
 
   const formFocusHandler = () => {
     setIsEntering(true);
   };
+
+  useEffect(() => {
+    document.title = `${import.meta.env.VITE_PROJECT_TITLE} | New Blog`;
+  }, []);
 
   return (
     <>

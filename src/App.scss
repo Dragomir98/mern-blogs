@@ -420,7 +420,12 @@ div {
   .rdw-colorpicker-wrapper,
   .rdw-list-wrapper,
   .rdw-link-wrapper,
-  .rdw-history-wrapper {
+  .rdw-history-wrapper,
+  .rdw-emoji-wrapper,
+  .rdw-fontsize-wrapper,
+  .rdw-block-wrapper,
+  .rdw-fontfamily-wrapper {
+    position: relative;
     cursor: pointer;
     border-radius: 2px;
     @include flex-container(center, center);
@@ -446,13 +451,17 @@ div {
   }
 
   .rdw-dropdown-optionwrapper,
-  .rdw-emoji-modal {
+  .rdw-emoji-modal,
+  .rdw-embedded-modal,
+  .rdw-image-modal,
+  .rdw-link-modal,
+  .rdw-colorpicker-modal {
     list-style-type: none;
     position: absolute;
     z-index: 10;
     background-color: white;
     top: 0;
-    padding: 0;
+    padding: $size-xs;
     transition: all ease-in-out 0.2s;
     box-shadow: 0 2px 4px;
     border-radius: 5px;
@@ -460,10 +469,19 @@ div {
 
     .rdw-dropdownoption-default {
       padding: 5px;
+      border-radius: 5px;
       &:hover {
         background-color: var(--theme-primary-color);
         color: var(--theme-third-color);
       }
     }
+  }
+
+  //remove toolbar fields
+  .rdw-colorpicker-wrapper,
+  .rdw-remove-wrapper,
+  .rdw-image-wrapper {
+    display: none !important;
+    visibility: hidden !important;
   }
 }
